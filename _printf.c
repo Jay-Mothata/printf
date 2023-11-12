@@ -32,10 +32,9 @@ static void print_char(va_list ls_args, int *output_count)
 int _printf(const char *format, ...)
 {
 	va_list ls_args;
+	int output_of_chars = 0;
 
 	va_start(ls_args, format);
-
-	int output_of_chars = 0;
 
 	while (*format)
 	{
