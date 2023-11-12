@@ -5,7 +5,8 @@
  * @c: Character to be written
  * @output_count: Pointer to the count of characters written
  */
-static void write_char(char c, int *output_count)
+
+void write_char(char c, int *output_count)
 {
 	write(1, &c, 1);
 	(*output_count)++;
@@ -16,7 +17,8 @@ static void write_char(char c, int *output_count)
  * @ls_args: Argument list
  * @output_count: Pointer to the count of characters written
  */
-static void print_char(va_list ls_args, int *output_count)
+
+void print_char(va_list ls_args, int *output_count)
 {
 	int character = va_arg(ls_args, int);
 
@@ -29,6 +31,7 @@ static void print_char(va_list ls_args, int *output_count)
  *
  * Return: the number of characters printed
  */
+
 int _printf(const char *format, ...)
 {
 	va_list ls_args;
