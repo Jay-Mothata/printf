@@ -31,6 +31,18 @@ int print_string(const char *str)
 }
 
 /**
+ * print_percentage - Helper function to handle
+ * '%'
+ * Return: 1
+ */
+
+int print_percentage(void)
+{
+	print_char('%');
+	return (1);
+}
+
+/**
  * _printf - a function that produces output according to a format
  * @format: character string (format string)
  *
@@ -57,15 +69,19 @@ int _printf(const char *format, ...)
 		else
 		{
 			format++;
-			if (*format == 'c' || *format == '%')
+			if (*format == 'c')
 			{
-				print_char((*format == 'c') ? va_arg(ls_args, int) : '%');
+				print_char((char)va_arg(ls_args, int));
 				printed_chars++;
 			}
 			else if (*format == 's')
 			{
 				str = va_arg(ls_args, const char *);
 				printed_chars += print_string(str);
+			}
+			else if (*format == '%')
+			{
+				printed_chars += print_percentage();
 			}
 		}
 		format++;
