@@ -57,6 +57,9 @@ int _printf(const char *format, ...)
 
 	va_start(ls_args, format);
 
+	if (format == NULL)
+		return (-1);
+
 	while (*format)
 	{
 		const char *str;
@@ -80,9 +83,7 @@ int _printf(const char *format, ...)
 				printed_chars += print_string(str);
 			}
 			else if (*format == '%')
-			{
 				printed_chars += print_percentage();
-			}
 		}
 		format++;
 	}
