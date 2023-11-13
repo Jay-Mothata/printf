@@ -7,6 +7,6 @@
 
 int _printf(const char *format, ...);
 void print_char(char charater);
-int print_string(const char *str, int length);
+int print_string(const char *str);
 
 #endif /* MAIN_H */
