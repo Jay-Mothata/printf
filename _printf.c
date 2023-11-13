@@ -30,14 +30,16 @@ void print_string(const char *str, int length)
 
 int _printf(const char *format, ...)
 {
+	int printed_chars = 0;
+
 	va_list ls_args;
 
 	va_start(ls_args, format);
 
-	int printed_chars = 0; /*Counter for printed chars*/
-
 	while (*format)
 	{
+		const char *str;
+
 		if (*format != '%')
 		{
 			print_char(*format);
@@ -53,8 +55,7 @@ int _printf(const char *format, ...)
 			}
 			else if (*format == 's')
 			{
-				const char *str = va_arg(ls_args, const char *);
-
+				str = va_arg(ls_args, const char *);
 				while (*str)
 				{
 					print_char(*str);
