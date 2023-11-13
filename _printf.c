@@ -13,12 +13,21 @@ void print_char(char character)
 /**
  * print_string - Helps to print a string of a specified length
  * @str: String to be printed
- * @length: Length of string
+ * @count: counts characted printed
+ *
+ * Return: character printed
  */
 
-void print_string(const char *str, int length)
+int print_string(const char *str, int count)
 {
-	write(1, str, length);
+	count = 0;
+
+	while (*str)
+	{
+		print_char(*str);
+		count++;
+	}
+	return (count);
 }
 
 /**
