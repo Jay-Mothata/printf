@@ -13,18 +13,18 @@ void print_char(char character)
 /**
  * print_string - Helps to print a string of a specified length
  * @str: String to be printed
- * @count: counts characted printed
  *
  * Return: character printed
  */
 
-int print_string(const char *str, int count)
+int print_string(const char *str)
 {
-	count = 0;
+	int count = 0;
 
 	while (*str)
 	{
 		print_char(*str);
+		str++;
 		count++;
 	}
 	return (count);
@@ -65,12 +65,7 @@ int _printf(const char *format, ...)
 			else if (*format == 's')
 			{
 				str = va_arg(ls_args, const char *);
-				while (*str)
-				{
-					print_char(*str);
-					str++;
-					printed_chars++;
-				}
+				printed_chars += print_string(str);
 			}
 		}
 		format++;
