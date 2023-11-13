@@ -62,8 +62,6 @@ int _printf(const char *format, ...)
 
 	while (*format)
 	{
-		const char *str;
-
 		if (*format != '%')
 		{
 			print_char(*format);
@@ -78,15 +76,12 @@ int _printf(const char *format, ...)
 				printed_chars++;
 			}
 			else if (*format == 's')
-			{
-				str = va_arg(ls_args, const char *);
-				printed_chars += print_string(str);
-			}
+				printed_chars += print_string(va_arg(ls_args, const char *));
 			else if (*format == '%')
 				printed_chars += print_percentage();
 		}
 		format++;
 	}
-	va_end(ls_args); /*CLeans up variable arguements*/
+	va_end(ls_args); /*Cleans up variable arguements*/
 	return (printed_chars);/*Returns the total chars printed*/
 }
