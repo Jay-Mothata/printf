@@ -27,14 +27,21 @@ int specifier_handler(int specifier, va_list args)
 	{
 		case CHAR_TYPE:
 			c = (char)va_arg(args, int);
-			return (write(1, &c, sizeof(char)));
+			print_char(c);
+			return (1);
 		case STRING_TYPE:
 			s = va_arg(args, char *);
 			if (s == NULL)
-				return (write(1, "(nil)", sizeof("(nil)")));
-			return (write(1, s, strlen(s)));
+				s = "(nil)";
+			while (*s)
+			{
+				print_char(*s);
+				s++;
+			}
+			return (strlen(s));
 		case PERCENT_TYPE:
-			return (write(1, "%", sizeof(char)));
+			print_char('%');
+			return (1);
 		default:
 			return (write(1, "Err! Specifiers", sizeof("Err! Specifiers")));
 	}
