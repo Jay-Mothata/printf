@@ -73,7 +73,7 @@ int _printf(const char *format, ...)
 			format++;
 			/*Call specifier handler based on the specifier*/
 			specifier = (*format == 'c') ? CHAR_TYPE :
-				((*format == 's') ? STRING_TYPE : PERCENT_TYPE);
+				    ((*format == 's') ? STRING_TYPE : PERCENT_TYPE);
 			printed_chars += specifier_handler(specifier, ls_args);
 		}
 		format++;
