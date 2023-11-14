@@ -11,36 +11,35 @@ void print_char(char character)
 }
 
 /**
- * print_string - Helps to print a string of a specified length
- * @str: String to be printed
+ * specifier_handler - Handles different data types
+ * based on the provided specifier
+ * @specifier: Specifier to be handled
+ * @args: arguement list
  *
- * Return: character printed
+ * Return: Number of characters to be  printed
  */
 
-int print_string(const char *str)
+int specifier_handler(int specifier, va_list args)
 {
-	int count = 0;
+	char c, *s;
 
-	while (*str)
+	switch (specifier)
 	{
-		print_char(*str);
-		str++;
-		count++;
+		case CHAR_TYPE:
+			c = (char)va_arg(args, int);
+			return (write(1, &c, sizeof(char)));
+		case STRING_TYPE:
+			s = va_arg(args, char *);
+			if (s == NULL)
+				return (write(1, "(nil)", sizeof("(nil)")));
+			return (write(1, s, strlen(s)));
+		case PERCENT_TYPE:
+			return (write(1, "%", sizeof(char)));
+		default:
+			return (write(1, "Err! Specifiers", sizeof("Err! Specifiers")));
 	}
-	return (count);
 }
 
-/**
- * print_percentage - Helper function to handle
- * '%'
- * Return: 1
- */
-
-int print_percentage(void)
-{
-	print_char('%');
-	return (1);
-}
 
 /**
  * _printf - a function that produces output according to a format
@@ -62,6 +61,8 @@ int _printf(const char *format, ...)
 
 	while (*format)
 	{
+		int specifier;
+
 		if (*format != '%')
 		{
 			print_char(*format);
@@ -70,18 +71,14 @@ int _printf(const char *format, ...)
 		else
 		{
 			format++;
-			if (*format == 'c')
-			{
-				print_char((char)va_arg(ls_args, int));
-				printed_chars++;
-			}
-			else if (*format == 's')
-				printed_chars += print_string(va_arg(ls_args, const char *));
-			else if (*format == '%')
-				printed_chars += print_percentage();
+			/*Call specifier handler based on the specifier*/
+			specifier = (*format == 'c') ? CHAR_TYPE :
+				((*format == 's') ? STRING_TYPE : PERCENT_TYPE);
+			printed_chars += specifier_handler(specifier, ls_args);
 		}
 		format++;
 	}
+
 	va_end(ls_args); /*Cleans up variable arguements*/
 	return (printed_chars);/*Returns the total chars printed*/
 }
