@@ -21,23 +21,29 @@ void print_char(char character)
 
 int specifier_handler(int specifier, va_list args)
 {
-	char c, *s;
+	char *s;
+	int result;
 
 	switch (specifier)
 	{
 		case CHAR_TYPE:
-			c = (char)va_arg(args, int);
-			return (write(1, &c, sizeof(char)));
+			{
+				char c = (char)va_arg(args, int);
+
+				return (write(1, &c, sizeof(char)));
+			}
 		case STRING_TYPE:
 			s = va_arg(args, char *);
 			if (s == NULL)
-				return (write(1, "(nil)", sizeof("(nil)")));
+				s = "(nil)";
 			return (write(1, s, strlen(s)));
 		case PERCENT_TYPE:
 			return (write(1, "%", sizeof(char)));
 		default:
-			return (write(1, "Err! Specifiers", sizeof("Err! Specifiers")));
+			return (-1);
 	}
+
+	return (result);
 }
 
 
@@ -51,13 +57,14 @@ int specifier_handler(int specifier, va_list args)
 int _printf(const char *format, ...)
 {
 	int printed_chars = 0;
+	int result;
 
 	va_list ls_args;
 
-	va_start(ls_args, format);
-
 	if (format == NULL)
 		return (-1);
+
+	va_start(ls_args, format);
 
 	while (*format)
 	{
@@ -74,7 +81,14 @@ int _printf(const char *format, ...)
 			/*Call specifier handler based on the specifier*/
 			specifier = (*format == 'c') ? CHAR_TYPE :
 				    ((*format == 's') ? STRING_TYPE : PERCENT_TYPE);
-			printed_chars += specifier_handler(specifier, ls_args);
+			result = specifier_handler(specifier, ls_args);
+
+			if (result == -1)
+			{
+				va_end(ls_args);
+				return (-1);
+			}
+			printed_chars += result;
 		}
 		format++;
 	}
