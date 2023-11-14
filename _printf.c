@@ -39,13 +39,6 @@ int specifier_handler(int specifier, va_list args)
 			return (write(1, s, strlen(s)));
 		case PERCENT_TYPE:
 			return (write(1, "%", sizeof(char)));
-		case INT_TYPE:
-		{
-			int num = va_arg(args, int);
-
-			result = print_int(num);
-			break;
-		}
 		default:
 			return (-1);
 	}
