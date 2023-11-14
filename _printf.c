@@ -53,47 +53,6 @@ int specifier_handler(int specifier, va_list args)
 	return (result);
 }
 
-#include <unistd.h>
-
-/**
- * print_int - Helper function to write an integer to stdout
- * @num: Integer to be written
- *
- * Return: Number of characters written
- */
-
-int print_int(int num)
-{
-	char buffer[12];  /* Assumes a maximum of 12 characters for an integer */
-	int len = 0;
-
-	if (num < 0)
-	{
-		write(1, "-", 1);
-		len++;
-		num = -num;
-	}
-
-	if (num == 0)
-	{
-		write(1, "0", 1);
-		return (1);
-	}
-
-	while (num != 0)
-	{
-		buffer[len++] = '0' + (num % 10);
-		num /= 10;
-	}
-
-	while (len > 0)
-	{
-		write(1, &buffer[--len], 1);
-	}
-
-	return (len);
-}
-
 /**
  * _printf - a function that produces output according to a format
  * @format: character string (format string)
