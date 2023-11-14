@@ -18,6 +18,6 @@ void print_char(char charater);
 
 /* New function prototype for print_int */
 void print_integer(va_list args);
-void print_decimal(va_list args);
+int _putchar (char c);
 
 #endif /*MAIN_H */
