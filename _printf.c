@@ -39,6 +39,8 @@ int specifier_handler(int specifier, va_list args)
 			return (write(1, s, strlen(s)));
 		case PERCENT_TYPE:
 			return (write(1, "%", sizeof(char)));
+		case BINARY_TYPE:
+			return (print_binary(va_arg(args, unsigned int)));
 		default:
 			return (-1);
 	}
@@ -79,7 +81,8 @@ int _printf(const char *format, ...)
 			format++;
 			/* Call specifier handler based on the specifier */
 			specifier = (*format == 'c') ? CHAR_TYPE :
-				((*format == 's') ? STRING_TYPE : PERCENT_TYPE);
+				(*format == 's') ? STRING_TYPE :
+				((*format == 'b') ? BINARY_TYPE : PERCENT_TYPE);
 			result = specifier_handler(specifier, ls_args);
 
 			if (result == -1)
