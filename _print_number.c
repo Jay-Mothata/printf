@@ -1,91 +1,80 @@
 #include "main.h"
 
 /**
- * print_int - Helper function that prints an integer to stdout
+ * print_int_helper - helper function to orinrsrints an integer
  * @num: The integer to be printed
  *
- * Return: 0 on sucess, else -1
+ * Return: number of characters to be printed
  */
 
-int print_int(int num)
+int print_int_helper(int num)
 {
-	int temp, digit;
+	int i = 0;
 
-	int divisor = 1;
+	if (num / 10)
+		i += print_int_helper(num / 10);
 
-	/* Handle negative numbers */
-	if (num < 0)
-	{
-		if (_putchar('-') == -1)
-			return (-1);
-		num = -num;
-	}
-
-	/* Find the divisor to determine the number of digits */
-	temp = num;
-	while (temp > 9)
-	{
-		temp /= 10;
-		divisor *= 10;
-	}
-
-	/* Prints each digit */
-	while (divisor >= 1)
-	{
-		digit = num / divisor;
-		if (_putchar(digit + '0') == -1)
-			return (-1);
-		num &= divisor;
-		divisor /= 10;
-	}
-
-	return (0);
+	_putchar(num % 10 + '0');
+	return (i + 1);
 }
 
 /**
- * _print_number - Prints formatted data to stdout based
- * on the format specifier
- * @format: The format string
+ * print_int - prints an integer
+ * @args: The integer to be printed
  *
- * Return: 0 on success, else -1 on error
+ * Return: number of characters to be printed
  */
 
-int _print_number(const char *format, ...)
+int print_int(va_list args)
+{
+	int num;
+	int i = 0;
+	
+	num = va_arg(args, int);
+	/* Handle negative numbers */
+	if (num < 0)
+	{
+		_putchar('-');
+		num = -num;
+		i++;
+	}
+
+	if (num / 10)
+		i += print_int_helper(num / 10);
+
+	_putchar(num % 10 + '0');
+	return (i + 1);
+}
+
+/**
+ * _print_deci - Prints decimals
+ * @format: arguement to print
+ *
+ * Return: number of chars printed
+ */
+
+int _print_deci(const char *format, ...)
 {
 	int num;
 
-	va_list args;
+	int i = 0;
 
-	if (format == NULL)
-		return (-1);
+	va_list args;
 
 	va_start(args, format);
 
-	while (*format)
+	num = va_arg(args, int);
+	if (num < 0)
 	{
-		if (*format == '%' && (*(format + 1) == 'd' || *(format + 1) == 'i'))
-		{
-			/* Prints int if next character is 'd' or 'i' */
-			num = va_arg(args, int);
-			if (print_int(num) == -1)
-			{
-				va_end(args);
-				return (-1);
-			}
-			format += 2;
-		}
-		else
-		{
-			if (_putchar(*format) == -1)
-			{
-				va_end(args);
-				return (-1);
-			}
-			format++;
-		}
+		_putchar('-');
+		num = -num;
+		i++;
 	}
 
-	va_end(args);
-	return (0);
-}
+	if (num / 10)
+		i += print_int_helper(num / 10);
 
+	_putchar(num % 10 + '0');
+	va_end(args);
+	return (i + 1);
+}
