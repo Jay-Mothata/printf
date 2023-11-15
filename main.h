@@ -14,10 +14,7 @@
 #define BINARY_TYPE 5
 
 /* Custom _putchar function for printing to stdout */
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
+int _putchar(char c);
 
 /* Prototypes for handling %c, %s, %d specifiers */
 int _printf(const char *format, ...);
