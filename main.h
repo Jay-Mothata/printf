@@ -14,7 +14,10 @@
 #define BINARY_TYPE 5
 
 /* Custom _putchar function for printing to stdout */
-int _putchar (char c);
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
+}
 
 /* Prototypes for handling %c, %s, %d specifiers */
 int _printf(const char *format, ...);
@@ -22,10 +25,11 @@ int specifier_handler(int specidfier, va_list args);
 void print_char(char charater);
 
 /* Prototypes for handling %d and %i specifiers */
-int _print_number(const char *format, ...);
-int print_int(int num);
+int _print_deci(const char *format, ...);
+int print_int(va_list args);
+int print_int_helper(int num);
 
-/*Protyotype fo handling %b specifiers */
+/*Protyotype for  handling %b specifiers */
 int print_binary(unsigned int n);
 
 #endif /*MAIN_H */
